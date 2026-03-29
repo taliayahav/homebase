@@ -1,5 +1,6 @@
 package com.realestate.backend.controller;
 
+import com.realestate.backend.dto.ListingFilter;
 import com.realestate.backend.dto.ListingRequest;
 import com.realestate.backend.dto.ListingResponse;
 import com.realestate.backend.service.ListingService;
@@ -18,8 +19,8 @@ public class ListingController {
     private final ListingService listingService;
 
     @GetMapping
-    public ResponseEntity<List<ListingResponse>> getAllListings() {
-        return ResponseEntity.ok(listingService.getAllListings());
+    public ResponseEntity<List<ListingResponse>> getAllListings(@ModelAttribute ListingFilter filter) {
+        return ResponseEntity.ok(listingService.getAllListings(filter));
     }
 
     @GetMapping("/{id}")

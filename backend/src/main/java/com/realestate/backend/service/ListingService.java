@@ -1,9 +1,11 @@
 package com.realestate.backend.service;
 
+import com.realestate.backend.dto.ListingFilter;
 import com.realestate.backend.dto.ListingRequest;
 import com.realestate.backend.dto.ListingResponse;
 import com.realestate.backend.model.Listing;
 import com.realestate.backend.repository.ListingRepository;
+import com.realestate.backend.specification.ListingSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,8 +19,8 @@ public class ListingService {
 
     private final ListingRepository listingRepository;
 
-    public List<ListingResponse> getAllListings() {
-        return listingRepository.findAll()
+    public List<ListingResponse> getAllListings(ListingFilter filter) {
+        return listingRepository.findAll(ListingSpecification.withFilters(filter))
                 .stream()
                 .map(this::toResponse)
                 .collect(Collectors.toList());
