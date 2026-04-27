@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { getAllListings } from '../api/listings';
+import ListingCard from '../components/ListingCard';
 
 function ListingsPage() {
   const [listings, setListings] = useState([]);
@@ -18,18 +19,17 @@ function ListingsPage() {
       });
   }, []);
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  if (loading) return <p className="status-message">Loading listings...</p>;
+  if (error) return <p className="status-message">{error}</p>;
 
   return (
-    <div>
-      <h2>Listings</h2>
-      {listings.map(listing => (
-        <div key={listing.id}>
-          <h3>{listing.title}</h3>
-          <p>{listing.neighborhood} · {listing.bedrooms} bed · ₪{listing.price.toLocaleString()}</p>
-        </div>
-      ))}
+    <div className="listings-page">
+      <h2>Available Listings</h2>
+      <div className="listings-grid">
+        {listings.map(listing => (
+          <ListingCard key={listing.id} listing={listing} />
+        ))}
+      </div>
     </div>
   );
 }
